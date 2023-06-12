@@ -1,0 +1,34 @@
+{% load static numberformat %} 
+{% block body %} 
+{% block css %}
+  <link rel="stylesheet" href="{% static 'list.css' %}" />
+{% endblock %}
+
+<h1>Product List</h1>
+
+<ul>
+  {% for product in products %}
+  <li>
+    Product name: {{ product.name }} 
+  </li>
+  <li>
+    Price: {{ product.price|formatize }}
+  </li>
+  <li>
+    {% if product.description %} 
+    Description: {{ product.description|safe|truncatechars:50 }} 
+    {%else%} No description {% endif %}
+   
+  </li>
+  <li>  
+  {% for productImage in product.productimage_set.all %}
+    Product image: <img src="{{ productImage.image.url }}" alt="{{ productImage.product.name }}" />
+    Product company image: <img src="{{ productImage.company_logo.url }}" alt="{{ productImage.product.name }}" />
+  {% endfor %}
+  </li>
+
+  {% endfor %}
+</ul>
+
+
+{% endblock %}
